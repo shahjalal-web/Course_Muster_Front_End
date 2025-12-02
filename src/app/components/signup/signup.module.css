@@ -1,0 +1,109 @@
+/* signup.module.css - light, modern, responsive with subtle animation */
+
+:root{
+  --bg: #ffffff;
+  --muted: #6b7280;
+  --accent: #2563eb;
+  --card: #f8fafc;
+  --border: #e6eefc;
+  --shadow: 0 10px 30px rgba(2,6,23,0.08);
+}
+
+.pageWrap{
+  min-height: calc(100vh - 120px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:3rem 1rem;
+  background: linear-gradient(180deg,#f7fbff 0%, #ffffff 100%);
+}
+
+.card{
+  width:100%;
+  max-width:820px;
+  background:var(--bg);
+  border-radius:14px;
+  padding:2rem;
+  box-shadow:var(--shadow);
+  border:1px solid var(--border);
+  transform: translateY(0);
+  transition: transform 260ms ease, box-shadow 260ms ease;
+}
+.card:hover{ transform: translateY(-6px); box-shadow:0 18px 40px rgba(2,6,23,0.09); }
+
+.title{
+  margin:0 0 1rem 0;
+  font-size:1.4rem;
+  color:#0f172a;
+  font-weight:700;
+  letter-spacing: -0.2px;
+}
+
+.form{ display:flex; flex-direction:column; gap:0.85rem; }
+
+.label{
+  display:flex; flex-direction:column; gap:0.35rem; font-size:0.95rem;
+  color:var(--muted);
+}
+
+.input{
+  padding:0.65rem 0.85rem;
+  border-radius:10px;
+  border:1px solid #e6eefc;
+  background: #fff;
+  outline: none;
+  transition: box-shadow 160ms ease, transform 160ms ease, border-color 160ms;
+  font-size:0.95rem;
+}
+.input:focus{
+  box-shadow: 0 8px 20px rgba(37,99,235,0.08);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.row{
+  display:flex;
+  gap:1rem;
+}
+.flex{ flex:1; }
+
+.button{
+  margin-top: 0.6rem;
+  padding:0;
+  border:0;
+  cursor:pointer;
+  border-radius:10px;
+  overflow:hidden;
+  background: linear-gradient(90deg,var(--accent), #1e40af);
+  color:#fff;
+  font-weight:700;
+  box-shadow: 0 8px 20px rgba(37,99,235,0.12);
+  transition: transform 160ms ease, filter 160ms;
+}
+.button:active{ transform: translateY(1px); }
+.button[disabled]{ opacity:0.7; cursor:not-allowed; }
+
+.btnInner{
+  display:block;
+  padding:0.85rem 1rem;
+  letter-spacing:0.2px;
+}
+
+/* subtle hover ripple */
+.button:hover .btnInner{
+  transform: translateY(-3px);
+}
+
+/* feedback */
+.error{ color:#b91c1c; background:#fff5f5; padding:0.6rem; border-radius:8px; font-weight:600; }
+.success{ color:#065f46; background:#ecfdf5; padding:0.6rem; border-radius:8px; font-weight:600; }
+
+/* footer */
+.footer{ margin-top:0.6rem; font-size:0.9rem; color:var(--muted); }
+
+/* responsive */
+@media (max-width:720px){
+  .row{ flex-direction:column; }
+  .card{ padding:1.25rem; }
+  .title{ font-size:1.15rem; }
+}
