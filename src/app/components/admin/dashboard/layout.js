@@ -25,7 +25,9 @@ export default function AdminLayout({ children }) {
   const menu = [
     { label: "Dashboard", href: "/components/admin/dashboard" },
     { label: "Users", href: "/components/admin/dashboard/users" },
-    { label: "Courses", href: "/components/admin/dashboard/courses" },
+    { label: "Add Courses", href: "/components/admin/dashboard/courses" },
+    { label: "Add Lesson", href: "/components/admin/dashboard/lesson" },
+    { label: "All Courses", href: "/components/admin/dashboard/allcourses" },
     { label: "Reports", href: "/components/admin/dashboard/reports" },
     { label: "Settings", href: "/components/admin/dashboard/settings" },
     { label: "Profile", href: "/components/admin/dashboard/profile" },
