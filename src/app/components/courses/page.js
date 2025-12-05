@@ -42,7 +42,6 @@ function CourseCard({ course, batchCount = 0, nextStartDate = null, enrollCount 
               : "Open enrollment"}
           </div>
           <div className="text-right">
-            <div className="text-xs text-gray-600">{enrollCount ?? 0} enrolled</div>
             <Link href={`/components/courses/${course._id}`}>
               <p className="text-xs text-indigo-600">View</p>
             </Link>

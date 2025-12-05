@@ -88,7 +88,7 @@ export default function AdminDashboardPage() {
 function StatCard({ title, value, color }) {
   return (
     <div className="bg-white p-5 rounded-xl shadow border flex items-center gap-4">
-      <div className={`w-12 h-12 rounded-lg bg-gradient-to-br ${color} flex items-center justify-center text-white font-bold`}>
+      <div className={`w-12 h-12 rounded-lg bg-linear-to-br ${color} flex items-center justify-center text-white font-bold`}>
         {value}
       </div>
       <div>

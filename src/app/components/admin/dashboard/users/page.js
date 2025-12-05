@@ -200,7 +200,7 @@ export default function AdminUsersPage() {
         {/* Desktop table */}
         <div className="hidden md:block bg-white rounded shadow-sm overflow-x-auto">
           <table className="min-w-full divide-y">
-            <thead className="bg-gradient-to-r from-indigo-50 to-white">
+            <thead className="bg-linear-to-r from-indigo-50 to-white">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-indigo-700">
                   #
@@ -280,7 +280,7 @@ export default function AdminUsersPage() {
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-sm max-w-xs break-words">
+                    <td className="px-6 py-4 text-sm max-w-xs wrap-break-word">
                       {u.email}
                     </td>
                     <td className="px-6 py-4 text-sm">
@@ -510,7 +510,7 @@ export default function AdminUsersPage() {
                       onClick={() =>
                         alert("Feature: Edit user (not implemented)")
                       }
-                      className="w-full sm:flex-1 px-3 py-2 rounded bg-gradient-to-r from-indigo-600 to-cyan-500 text-white text-sm"
+                      className="w-full sm:flex-1 px-3 py-2 rounded bg-linear-to-r from-indigo-600 to-cyan-500 text-white text-sm"
                     >
                       Edit
                     </button>

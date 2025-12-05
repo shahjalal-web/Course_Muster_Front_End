@@ -1,21 +1,7 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
-/**
- * pages/dashboard.jsx
- *
- * Real-data dashboard: uses your existing API `/api/course/student/progress`
- * to populate the UI. No backend changes required.
- *
- * - Expects a bearer token in localStorage as `token`.
- * - If you need a different API base, set NEXT_PUBLIC_API_URL env var.
- * - TailwindCSS required.
- *
- * NOTE: This file replaces the mock data with values derived from the API shape
- * returned earlier in this conversation:
- *  { courses: [...], overall: {...} }
- *
- * If your actual API returns different field names, tweak the mapping below.
- */
+
 
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
@@ -206,7 +192,7 @@ export default function DashboardPage() {
               </span>
             </div>
             <Link href="/components/courses">
-              <p className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-gradient-to-r from-indigo-600 to-cyan-500 text-white shadow-sm text-sm">
+              <p className="inline-flex items-center gap-2 px-3 py-2 rounded-md bg-linear-to-r from-indigo-600 to-cyan-500 text-white shadow-sm text-sm">
                 Browse courses
               </p>
             </Link>
@@ -283,7 +269,7 @@ export default function DashboardPage() {
                     <div className="text-sm text-gray-500">No courses found.</div>
                   ) : recentCourses.map((c) => (
                     <div key={c.id} className="flex items-center gap-3">
-                      <div className="w-14 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                      <div className="w-14 h-10 rounded-lg overflow-hidden bg-gray-100 shrink-0">
                         <img src={c.thumbnail} alt={c.title} className="w-full h-full object-cover" />
                       </div>
                       <div className="flex-1 min-w-0">
@@ -291,7 +277,7 @@ export default function DashboardPage() {
                         <div className="text-xs text-slate-500">{c.batchName} • {fmtDate(c.purchasedAt)}</div>
                         <div className="mt-1">
                           <div className="w-full bg-slate-100 rounded-full h-2">
-                            <div style={{ width: `${c.progress}%` }} className="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400" />
+                            <div style={{ width: `${c.progress}%` }} className="h-2 rounded-full bg-linear-to-r from-indigo-500 to-cyan-400" />
                           </div>
                         </div>
                       </div>
@@ -306,7 +292,7 @@ export default function DashboardPage() {
           <aside className="space-y-6">
             <div className="bg-white rounded-xl p-4 shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 text-white flex items-center justify-center text-lg font-semibold">
+                <div className="w-12 h-12 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 text-white flex items-center justify-center text-lg font-semibold">
                   {displayName.split(" ").map(n => n[0]).slice(0,2).join("")}
                 </div>
                 <div>
@@ -361,7 +347,7 @@ function StatCard({ title, value, subtitle, icon, accent = "from-indigo-50 to-in
   return (
     <div className="bg-white rounded-xl p-4 shadow-sm">
       <div className="flex items-center gap-3">
-        <div className={`p-3 rounded-lg bg-gradient-to-br ${accent}`}>
+        <div className={`p-3 rounded-lg bg-linear-to-br ${accent}`}>
           {icon}
         </div>
         <div>

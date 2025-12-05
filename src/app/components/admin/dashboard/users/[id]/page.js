@@ -1,22 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable @next/next/no-img-element */
-/**
- * pages/dashboard.jsx
- *
- * Real-data dashboard: uses your existing API `/api/course/student/progress`
- * to populate the UI. No backend changes required.
- *
- * - Expects a bearer token in localStorage as `token`.
- * - If you need a different API base, set NEXT_PUBLIC_API_URL env var.
- * - TailwindCSS required.
- *
- * NOTE: This file replaces the mock data with values derived from the API shape
- * returned earlier in this conversation:
- *  { courses: [...], overall: {...} }
- *
- * If your actual API returns different field names, tweak the mapping below.
- */
 
 "use client";
 import React, { useEffect, useMemo, useState } from "react";
@@ -427,7 +411,7 @@ export default function UserData() {
                   ) : (
                     recentCourses.map((c) => (
                       <div key={c.id} className="flex items-center gap-3">
-                        <div className="w-14 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                        <div className="w-14 h-10 rounded-lg overflow-hidden bg-gray-100 shrink-0">
                           <img
                             src={c.thumbnail}
                             alt={c.title}
@@ -445,7 +429,7 @@ export default function UserData() {
                             <div className="w-full bg-slate-100 rounded-full h-2">
                               <div
                                 style={{ width: `${c.progress}%` }}
-                                className="h-2 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-400"
+                                className="h-2 rounded-full bg-linear-to-r from-indigo-500 to-cyan-400"
                               />
                             </div>
                           </div>
@@ -462,7 +446,7 @@ export default function UserData() {
           <aside className="space-y-6">
             <div className="bg-white rounded-xl p-4 shadow-sm">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-indigo-400 to-cyan-400 text-white flex items-center justify-center text-lg font-semibold">
+                <div className="w-12 h-12 rounded-full bg-linear-to-br from-indigo-400 to-cyan-400 text-white flex items-center justify-center text-lg font-semibold">
                   {displayName
                     .split(" ")
                     .map((n) => n[0])

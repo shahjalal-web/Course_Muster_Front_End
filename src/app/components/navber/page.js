@@ -97,6 +97,11 @@ export default function Navbar() {
 
         <ul className={`nav-links ${open ? "open" : ""}`}>
           <li>
+            <Link href="/" onClick={() => setOpen(false)}>
+              Home
+            </Link>
+          </li>
+          <li>
             <Link href="/components/courses" onClick={() => setOpen(false)}>
               Courses
             </Link>

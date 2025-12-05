@@ -119,7 +119,7 @@ export default function ContactPage() {
               <div className="mt-4 flex items-center gap-3">
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-md bg-gradient-to-r from-indigo-600 to-cyan-500 text-white font-medium shadow-sm disabled:opacity-60"
+                  className="px-4 py-2 rounded-md bg-linear-to-r from-indigo-600 to-cyan-500 text-white font-medium shadow-sm disabled:opacity-60"
                   disabled={status.submitting}
                 >
                   {status.submitting ? "Sending..." : "Send message"}

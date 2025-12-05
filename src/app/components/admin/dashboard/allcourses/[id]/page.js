@@ -43,7 +43,6 @@ export default function ManageCoursePage() {
   useEffect(() => {
     if (!courseId) return;
     fetchCourse();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [courseId, refreshTick]);
 
   useEffect(() => {
