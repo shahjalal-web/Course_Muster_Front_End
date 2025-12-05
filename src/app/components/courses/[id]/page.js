@@ -3,8 +3,9 @@
 "use client";
 import React, { use, useCallback, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useSelector } from "react-redux";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://course-muster-back-end.vercel.app";
 
 function fmtDate(d) {
   if (!d) return "-";
@@ -24,6 +25,7 @@ export default function CourseDetailPageClient(props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const initialBatch = searchParams?.get("batch") || "";
+  const { user, isAuthenticated } = useSelector((state) => state.auth || {});
 
   const [course, setCourse] = useState(null);
   const [selectedBatchId, setSelectedBatchId] = useState(initialBatch || "");
@@ -42,9 +44,12 @@ export default function CourseDetailPageClient(props) {
         const token =
           typeof window !== "undefined" ? localStorage.getItem("token") : null;
         const res = await fetch(
-          `${API_BASE}/api/course/student/${encodeURIComponent(courseId)}`,
+          `${API_BASE}/api/courses/${encodeURIComponent(courseId)}`,
           {
-            headers: { "Content-Type": "application/json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+            headers: {
+              "Content-Type": "application/json",
+              ...(token ? { Authorization: `Bearer ${token}` } : {}),
+            },
             signal: ac.signal,
           }
         );
@@ -57,9 +62,17 @@ export default function CourseDetailPageClient(props) {
         setCourse(courseObj);
 
         // If no initial batch in URL, select the LAST batch by default (if any)
-        if (!initialBatch && Array.isArray(courseObj?.batches) && courseObj.batches.length > 0) {
+        if (
+          !initialBatch &&
+          Array.isArray(courseObj?.batches) &&
+          courseObj.batches.length > 0
+        ) {
           const lastIndex = courseObj.batches.length - 1;
-          const lastKey = makeBatchKey(courseObj._id, courseObj.batches[lastIndex], lastIndex);
+          const lastKey = makeBatchKey(
+            courseObj._id,
+            courseObj.batches[lastIndex],
+            lastIndex
+          );
           setSelectedBatchId(lastKey);
         }
       } catch (err) {
@@ -75,6 +88,32 @@ export default function CourseDetailPageClient(props) {
     return () => ac.abort();
   }, [courseId]);
 
+  // helper: check whether a lesson belongs to the selected batch
+  const lessonMatchesSelectedBatch = useCallback(
+    (l) => {
+      if (!selectedBatchId) return true;
+      // lesson might have batchId or batchName
+      if (!l) return false;
+      if (l.batchId && String(l.batchId) === String(selectedBatchId)) return true;
+      if (l.batchName) {
+        // find the selected batch object (to compare names more robustly)
+        const selBatch = course?.batches?.find((b, idx) => {
+          const key = makeBatchKey(course._id, b, idx);
+          if (String(key) === String(selectedBatchId)) return true;
+          return false;
+        });
+        if (selBatch && String(l.batchName).toLowerCase() === String(selBatch.name).toLowerCase())
+          return true;
+        // fallback: compare lesson.batchName with selectedBatchId string
+        if (String(l.batchName).toLowerCase() === String(selectedBatchId).toLowerCase())
+          return true;
+      }
+      return false;
+    },
+    [selectedBatchId, course]
+  );
+
+  // counts are now batch-aware: if selectedBatchId is set, only count lessons matching that batch
   const counts = useMemo(() => {
     const c = {
       lessons: 0,
@@ -84,7 +123,9 @@ export default function CourseDetailPageClient(props) {
       articles: 0,
     };
     if (!course?.lessons || !Array.isArray(course.lessons)) return c;
+
     for (const l of course.lessons) {
+      if (!lessonMatchesSelectedBatch(l)) continue;
       c.lessons++;
       const t = String(l.type || "video").toLowerCase();
       if (t === "video") c.videos++;
@@ -93,7 +134,7 @@ export default function CourseDetailPageClient(props) {
       else if (t === "article") c.articles++;
     }
     return c;
-  }, [course]);
+  }, [course, selectedBatchId, lessonMatchesSelectedBatch]);
 
   const isLoggedIn = useCallback(() => {
     if (typeof window === "undefined") return false;
@@ -124,17 +165,21 @@ export default function CourseDetailPageClient(props) {
 
   const handleEnroll = useCallback(async () => {
     if (!courseId) return;
-    if (!isLoggedIn()) {
-      const next = `/courses/${courseId}${
-        selectedBatchId ? `?batch=${encodeURIComponent(selectedBatchId)}` : ""
+    if (!isAuthenticated) {
+      const next = `/components/checkout?courseId=${encodeURIComponent(
+        courseId
+      )}${
+        selectedBatchId ? `&batch=${encodeURIComponent(selectedBatchId)}` : ""
       }`;
-      router.push(`/auth/login?next=${encodeURIComponent(next)}`);
+      router.push(`/components/login`);
       return;
     }
 
     setEnrolling(true);
     try {
-      const checkoutUrl = `/checkout?courseId=${encodeURIComponent(courseId)}${
+      const checkoutUrl = `/components/checkout?courseId=${encodeURIComponent(
+        courseId
+      )}${
         selectedBatchId ? `&batch=${encodeURIComponent(selectedBatchId)}` : ""
       }`;
       router.push(checkoutUrl);
@@ -154,7 +199,7 @@ export default function CourseDetailPageClient(props) {
     );
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 text-black">
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow p-6">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="md:col-span-2">
@@ -200,7 +245,6 @@ export default function CourseDetailPageClient(props) {
                     onChange={(e) => setSelectedBatchId(e.target.value)}
                     className="w-full px-3 py-2 border rounded"
                   >
-                    <option value="">All / Any batch</option>
                     {course.batches.map((b, idx) => {
                       const key = makeBatchKey(course._id, b, idx);
                       return (
@@ -226,7 +270,7 @@ export default function CourseDetailPageClient(props) {
               </div>
 
               <div className="mt-4">
-                {isLoggedIn() ? (
+                {user ? (
                   <button
                     onClick={handleEnroll}
                     disabled={enrolling}
@@ -241,14 +285,7 @@ export default function CourseDetailPageClient(props) {
                 ) : (
                   <button
                     onClick={() => {
-                      const next = `/courses/${courseId}${
-                        selectedBatchId
-                          ? `?batch=${encodeURIComponent(selectedBatchId)}`
-                          : ""
-                      }`;
-                      router.push(
-                        `/auth/login?next=${encodeURIComponent(next)}`
-                      );
+                      router.push(`/components/login`);
                     }}
                     className="w-full px-4 py-2 border rounded-lg"
                   >

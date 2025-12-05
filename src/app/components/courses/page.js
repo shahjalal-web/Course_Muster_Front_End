@@ -4,7 +4,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://course-muster-back-end.vercel.app";
 
 /* ---------- CourseCard (in-file) ---------- */
 function CourseCard({ course, batchCount = 0, nextStartDate = null, enrollCount = 0 }) {
@@ -107,7 +107,7 @@ export default function CoursesPageClient() {
       params.set("page", String(pg));
       params.set("limit", String(limit));
 
-      const res = await fetch(`${API_BASE}/api/course/student/get-all-courses?${params.toString()}`, {
+      const res = await fetch(`${API_BASE}/api/courses/get-all-courses?${params.toString()}`, {
         headers: { "Content-Type": "application/json" },
       });
       if (!res.ok) throw new Error("Failed to load courses");
@@ -181,7 +181,7 @@ export default function CoursesPageClient() {
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
   return (
-    <main className="min-h-screen bg-gray-50 py-10 px-4">
+    <main className="min-h-screen bg-gray-50 py-10 px-4 text-black">
       <div className="max-w-7xl mx-auto">
         <header className="mb-6">
           <h1 className="text-2xl font-bold">All Courses</h1>

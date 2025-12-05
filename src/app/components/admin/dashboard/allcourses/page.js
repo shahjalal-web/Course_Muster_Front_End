@@ -5,7 +5,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://course-muster-back-end.vercel.app";
 
 // AllCourses page (client-side filtering + per-batch expansion)
 
@@ -33,22 +33,6 @@ export default function AllCoursesPage() {
     fetchAllCourses(); // fetch once on mount
   }, []);
 
-  // helper: infer enroll count from course or batch using common field names
-  const getEnrollCount = (course, batch = null) => {
-    // if batch-level count exists, prefer that
-    if (batch) {
-      if (typeof batch.enrolledCount === "number") return batch.enrolledCount;
-      if (Array.isArray(batch.students)) return batch.students.length;
-      if (Array.isArray(batch.enrolledUsers)) return batch.enrolledUsers.length;
-    }
-
-    // fallback to course-level
-    if (typeof course.enrolledCount === "number") return course.enrolledCount;
-    if (Array.isArray(course.students)) return course.students.length;
-    if (Array.isArray(course.enrolledUsers)) return course.enrolledUsers.length;
-
-    return 0;
-  };
 
   // fetch all courses once
   async function fetchAllCourses() {
@@ -104,7 +88,6 @@ export default function AllCoursesPage() {
             batchName: b.name || `Batch ${idx + 1}`,
             batchStartDate: b.startDate || null,
             batchEndDate: b.endDate || null,
-            enrollCount: getEnrollCount(c, b),
             rawCourse: c,
             rawBatch: b,
           });
@@ -121,7 +104,6 @@ export default function AllCoursesPage() {
           batchName: null,
           batchStartDate: null,
           batchEndDate: null,
-          enrollCount: getEnrollCount(c, null),
           rawCourse: c,
           rawBatch: null,
         });
@@ -177,7 +159,7 @@ export default function AllCoursesPage() {
   const totalPages = Math.max(1, Math.ceil(total / limit));
 
   return (
-    <div className="min-h-screen bg-gray-50 py-10 px-4">
+    <div className="min-h-screen bg-gray-50 py-10 px-4 text-black">
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -314,9 +296,7 @@ export default function AllCoursesPage() {
                     </div>
 
                     <div className="mt-3 flex items-center justify-between">
-                      <div className="text-xs text-gray-500">
-                        {it.enrollCount} enrolled
-                      </div>
+                      
                       <Link
                         href={`/components/admin/dashboard/allcourses/${it.courseId}`}
                         className="text-xs text-indigo-600 hover:underline"

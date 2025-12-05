@@ -111,7 +111,7 @@ const onSubmit = async (e) => {
 
 
   return (
-    <div className="min-h-[85vh] bg-red-900 flex items-center justify-center bg-linear-to-b from-sky-50 to-white px-4 py-12">
+    <div className="min-h-[85vh] bg-red-900 flex items-center justify-center bg-linear-to-b from-sky-50 to-white px-4 py-12 text-black">
       <div className="w-full max-w-2xl bg-white border border-slate-100 rounded-2xl shadow-lg p-8 md:p-10 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
         <h1 className="text-2xl md:text-3xl font-extrabold text-green-800 mb-3 text-center">
           Create Student Account

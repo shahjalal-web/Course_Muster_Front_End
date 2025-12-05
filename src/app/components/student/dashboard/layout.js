@@ -27,9 +27,7 @@ export default function StudentLayout({ children }) {
   const menu = [
     { label: "Dashboard", href: "/components/student/dashboard" },
     { label: "Courses", href: "/components/student/dashboard/courses" },
-    { label: "Assignments", href: "/components/student/dashboard/assignment" },
-    { label: "Profile", href: "/components/student/dashboard/profile" },
-    // আপনি চাইলে nested routes বা icons যোগ করুন
+    { label: "Progress", href: "/components/student/dashboard/progress" },
   ];
 
   return (

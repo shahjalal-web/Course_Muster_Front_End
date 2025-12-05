@@ -3,8 +3,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "https://course-muster-back-end.vercel.app";
 
 // Utility: format date nicely
 function fmtDate(d) {
@@ -61,7 +62,8 @@ export default function ManageCoursePage() {
     setLoading(true);
     setError(null);
     try {
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
       const res = await fetch(`${API_BASE}/api/course/${courseId}`, {
         headers: {
           "Content-Type": "application/json",
@@ -86,30 +88,6 @@ export default function ManageCoursePage() {
 
   const handleRefresh = () => setRefreshTick((t) => t + 1);
 
-  // optional: remove purchase (admin action) — safe-guard with confirm
-  const handleRemovePurchase = async (purchaseId) => {
-    if (!confirm("Remove this purchase record? This will decrement totalPurchases.")) return;
-    try {
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
-      const res = await fetch(`${API_BASE}/api/course/${courseId}/purchases/${purchaseId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          ...(token ? { Authorization: `Bearer ${token}` } : {}),
-        },
-      });
-      if (!res.ok) {
-        const d = await res.json().catch(() => ({}));
-        throw new Error(d?.message || "Failed to remove purchase");
-      }
-      alert("Purchase record removed");
-      handleRefresh();
-    } catch (err) {
-      console.error(err);
-      alert(err.message || "Error");
-    }
-  };
-
   // derive batch options
   const batchOptions = useMemo(() => {
     if (!course || !Array.isArray(course.batches)) return [];
@@ -133,7 +111,8 @@ export default function ManageCoursePage() {
         if (!Number.isNaN(n) && n > maxNum) maxNum = n;
       }
     });
-    const next = maxNum > 0 ? maxNum + 1 : (batchesArray ? batchesArray.length + 1 : 1);
+    const next =
+      maxNum > 0 ? maxNum + 1 : batchesArray ? batchesArray.length + 1 : 1;
     return `Batch ${next}`;
   }
 
@@ -142,15 +121,29 @@ export default function ManageCoursePage() {
     if (!selectedBatchId) return true; // All
     if (!itemBatchId && !itemBatchName) return false;
     // direct id match
-    if (itemBatchId && String(itemBatchId) === String(selectedBatchId)) return true;
+    if (itemBatchId && String(itemBatchId) === String(selectedBatchId))
+      return true;
     // sometimes batch id stored as string without ObjectId format (match fallback)
     if (itemBatchName && selectedBatchId) {
       // find selected option label and compare case-insensitively
-      const opt = batchOptions.find((o) => String(o.value) === String(selectedBatchId));
-      if (opt && opt.label && String(itemBatchName).toLowerCase() === String(opt.label).toLowerCase()) return true;
+      const opt = batchOptions.find(
+        (o) => String(o.value) === String(selectedBatchId)
+      );
+      if (
+        opt &&
+        opt.label &&
+        String(itemBatchName).toLowerCase() === String(opt.label).toLowerCase()
+      )
+        return true;
     }
     // also allow matching by synthetic key: e.g. `${courseId}-batch-${idx+1}`
-    if (String(itemBatchId) === `${course._id}-batch-${(batchOptions.find(o => o.value === selectedBatchId)?.idx ?? -1) + 1}`) return true;
+    if (
+      String(itemBatchId) ===
+      `${course._id}-batch-${
+        (batchOptions.find((o) => o.value === selectedBatchId)?.idx ?? -1) + 1
+      }`
+    )
+      return true;
     return false;
   };
 
@@ -209,7 +202,8 @@ export default function ManageCoursePage() {
 
     setAddingBatch(true);
     try {
-      const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
+      const token =
+        typeof window !== "undefined" ? localStorage.getItem("token") : null;
       const body = {
         name: newBatchName.trim(),
         startDate: newBatchStart || null,
@@ -239,7 +233,9 @@ export default function ManageCoursePage() {
         // if server returns just new batch, append locally
         setCourse((c) => {
           if (!c) return c;
-          const nextBatches = Array.isArray(c.batches) ? [...c.batches, data.batch] : [data.batch];
+          const nextBatches = Array.isArray(c.batches)
+            ? [...c.batches, data.batch]
+            : [data.batch];
           return { ...c, batches: nextBatches };
         });
       } else {
@@ -257,44 +253,46 @@ export default function ManageCoursePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-4xl mx-auto bg-white rounded-2xl shadow p-6">
+    <div className="min-h-screen bg-gray-50 py-8 px-4 text-black">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        className="max-w-4xl mx-auto bg-white rounded-2xl shadow p-6"
+      >
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
-            <h1 className="text-2xl font-bold">{course?.title || "Manage Course"}</h1>
-            <p className="text-sm text-gray-500 mt-1">{course?.category || "—"}</p>
+            <h1 className="text-2xl font-bold">
+              {course?.title || "Manage Course"}
+            </h1>
+            <p className="text-sm text-gray-500 mt-1">
+              {course?.category || "—"}
+            </p>
 
             <div className="mt-3 flex flex-wrap gap-3 items-center">
               <div className="text-sm text-gray-600">
-                Instructor: <span className="font-medium">{course?.instructorName || "—"}</span>
+                Instructor:{" "}
+                <span className="font-medium">
+                  {course?.instructorName || "—"}
+                </span>
               </div>
               <div className="text-sm text-gray-600">
-                Price: <span className="font-medium">{course?.price > 0 ? `${course.price} BDT` : "Free"}</span>
+                Price:{" "}
+                <span className="font-medium">
+                  {course?.price > 0 ? `${course.price} BDT` : "Free"}
+                </span>
               </div>
 
-              {/* Batch selector */}
-              {batchOptions.length > 0 && (
-                <div className="ml-0">
-                  <label className="text-xs text-gray-500 block">Batch</label>
-                  <select
-                    value={selectedBatchId}
-                    onChange={(e) => setSelectedBatchId(e.target.value)}
-                    className="mt-1 px-2 py-1 border rounded text-sm"
-                  >
-                    <option value="">All batches</option>
-                    {batchOptions.map((b) => (
-                      <option key={b.value} value={b.value}>
-                        {b.label}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-              )}
+              
             </div>
           </div>
 
           <div className="flex items-center gap-2">
-            <button onClick={handleRefresh} className="px-3 py-2 border rounded">Refresh</button>
+            <button
+              onClick={handleRefresh}
+              className="px-3 py-2 border rounded"
+            >
+              Refresh
+            </button>
           </div>
         </div>
 
@@ -302,7 +300,9 @@ export default function ManageCoursePage() {
           <div className="md:col-span-2">
             <div className="bg-gray-50 rounded p-4">
               <h3 className="text-sm font-semibold mb-2">Description</h3>
-              <p className="text-sm text-gray-700 whitespace-pre-wrap">{course?.description || "—"}</p>
+              <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                {course?.description || "—"}
+              </p>
             </div>
 
             {/* Batches */}
@@ -320,18 +320,25 @@ export default function ManageCoursePage() {
                 </div>
               </div>
 
-              {(course?.batches && course.batches.length > 0) ? (
+              {course?.batches && course.batches.length > 0 ? (
                 <ul className="space-y-2">
                   {course.batches.map((b, idx) => (
-                    <li key={batchKey(b, idx, course._id)} className="flex items-center justify-between">
+                    <li
+                      key={batchKey(b, idx, course._id)}
+                      className="flex items-center justify-between"
+                    >
                       <div>
-                        <div className="font-medium">{b.name || `Batch ${idx + 1}`}</div>
+                        <div className="font-medium">
+                          {b.name || `Batch ${idx + 1}`}
+                        </div>
                         <div className="text-xs text-gray-500">
                           {b.startDate ? `Start: ${fmtDate(b.startDate)}` : ""}{" "}
                           {b.endDate ? ` • End: ${fmtDate(b.endDate)}` : ""}
                         </div>
                       </div>
-                      <div className="text-xs text-gray-500">{/* optional batch meta */}</div>
+                      <div className="text-xs text-gray-500">
+                        {/* optional batch meta */}
+                      </div>
                     </li>
                   ))}
                 </ul>
@@ -344,7 +351,9 @@ export default function ManageCoursePage() {
                 <div className="mt-4 p-4 border rounded bg-white shadow-sm">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     <div>
-                      <label className="text-xs text-gray-600">Batch name</label>
+                      <label className="text-xs text-gray-600">
+                        Batch name
+                      </label>
                       <input
                         value={newBatchName}
                         onChange={(e) => setNewBatchName(e.target.value)}
@@ -354,7 +363,9 @@ export default function ManageCoursePage() {
                     </div>
 
                     <div>
-                      <label className="text-xs text-gray-600">Start date (optional)</label>
+                      <label className="text-xs text-gray-600">
+                        Start date (optional)
+                      </label>
                       <input
                         type="date"
                         value={newBatchStart}
@@ -364,7 +375,9 @@ export default function ManageCoursePage() {
                     </div>
 
                     <div>
-                      <label className="text-xs text-gray-600">End date (optional)</label>
+                      <label className="text-xs text-gray-600">
+                        End date (optional)
+                      </label>
                       <input
                         type="date"
                         value={newBatchEnd}
@@ -392,25 +405,45 @@ export default function ManageCoursePage() {
                     </div>
                   </div>
 
-                  {addBatchError && <div className="text-xs text-red-600 mt-2">{addBatchError}</div>}
+                  {addBatchError && (
+                    <div className="text-xs text-red-600 mt-2">
+                      {addBatchError}
+                    </div>
+                  )}
                 </div>
               )}
             </div>
 
             {/* Lessons (if available) */}
             <div className="mt-4 bg-gray-50 rounded p-4">
-              <h3 className="text-sm font-semibold mb-2">Lessons ({displayedLessonsCount})</h3>
+              <h3 className="text-sm font-semibold mb-2">
+                Lessons ({displayedLessonsCount})
+              </h3>
               <div className="space-y-2">
                 {displayedLessonsCount === 0 ? (
-                  <div className="text-sm text-gray-500">No lessons in this selection.</div>
+                  <div className="text-sm text-gray-500">
+                    No lessons in this selection.
+                  </div>
                 ) : (
                   displayedLessons.map((l) => (
-                    <div key={l._id} className="p-2 border rounded bg-white flex items-center justify-between">
+                    <div
+                      key={l._id}
+                      className="p-2 border rounded bg-white flex items-center justify-between"
+                    >
                       <div>
-                        <div className="font-medium">{l.lessonNumber}. {l.title}</div>
-                        <div className="text-xs text-gray-500">{l.type || "video"} {l.type === "video" && l.durationMinutes ? `• ${l.durationMinutes} min` : ""}</div>
+                        <div className="font-medium">
+                          {l.lessonNumber}. {l.title}
+                        </div>
+                        <div className="text-xs text-gray-500">
+                          {l.type || "video"}{" "}
+                          {l.type === "video" && l.durationMinutes
+                            ? `• ${l.durationMinutes} min`
+                            : ""}
+                        </div>
                       </div>
-                      <div className="text-xs text-gray-400">{l.batchId ? `Batch: ${l.batchId}` : ""}</div>
+                      <div className="text-xs text-gray-400">
+                        {l.batchId ? `Batch: ${l.batchId}` : ""}
+                      </div>
                     </div>
                   ))
                 )}
@@ -429,38 +462,31 @@ export default function ManageCoursePage() {
                 <div className="text-sm text-gray-500">Loading...</div>
               ) : !course ? (
                 <div className="text-sm text-gray-500">No data</div>
-              ) : (displayedPurchasesCount > 0) ? (
+              ) : displayedPurchasesCount > 0 ? (
                 <div className="space-y-2 max-h-[42vh] overflow-auto">
                   <table className="w-full text-sm">
                     <thead>
                       <tr className="text-left text-xs text-gray-500">
                         <th className="pb-2">Student</th>
-                        <th className="pb-2">ID</th>
-                        <th className="pb-2">Purchased At</th>
                         <th className="pb-2">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                       {displayedPurchases.map((p) => (
-                        <tr key={p._id || p.student || Math.random()} className="border-t">
+                        <tr
+                          key={p._id || p.student || Math.random()}
+                          className="border-t"
+                        >
                           <td className="py-2">{p.studentName || "—"}</td>
-                          <td className="py-2 text-xs text-gray-500">{p.student ? String(p.student) : "—"}</td>
-                          <td className="py-2 text-xs text-gray-500">{p.purchasedAt ? fmtDate(p.purchasedAt) : "—"}</td>
                           <td className="py-2">
-                            <div className="flex gap-2">
-                              <button
-                                onClick={() => { navigator.clipboard?.writeText(p.student ? String(p.student) : ""); alert("Copied"); }}
-                                className="text-xs px-2 py-1 border rounded"
-                              >
-                                Copy ID
-                              </button>
-                              <button
-                                onClick={() => handleRemovePurchase(p._id)}
-                                className="text-xs px-2 py-1 bg-red-50 text-red-600 border rounded"
-                              >
-                                Remove
-                              </button>
-                            </div>
+                            <Link
+                              href={`/components/admin/dashboard/users/${
+                                p._id || p.id
+                              }`}
+                              className="px-3 py-1 rounded-md border text-sm bg-blue-400 hover:bg-slate-50"
+                            >
+                              See Progress
+                            </Link>
                           </td>
                         </tr>
                       ))}
@@ -468,7 +494,9 @@ export default function ManageCoursePage() {
                   </table>
                 </div>
               ) : (
-                <div className="text-sm text-gray-500">No purchases in this selection.</div>
+                <div className="text-sm text-gray-500">
+                  No purchases in this selection.
+                </div>
               )}
             </div>
           </div>

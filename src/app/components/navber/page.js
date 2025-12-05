@@ -76,9 +76,9 @@ export default function Navbar() {
     "P";
 
   return (
-    <header className="nav-header">
+    <header className="nav-header text-black">
       <nav className="nav-container">
-        <div className="brand">
+        <div className="md:block hidden brand">
           <Link href="/" className="brand-link">
             CourseMaster
           </Link>
@@ -102,11 +102,6 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link href="/components/pricing" onClick={() => setOpen(false)}>
-              Pricing
-            </Link>
-          </li>
-          <li>
             <Link href="/components/about" onClick={() => setOpen(false)}>
               About
             </Link>
@@ -124,7 +119,7 @@ export default function Navbar() {
               <Link href="/components/login" className="btn btn-outline">
                 Login
               </Link>
-              <Link href="/components/signup" className="btn btn-primary">
+              <Link href="/components/signup" className="btn btn-primary ml-2">
                 Sign up
               </Link>
             </div>

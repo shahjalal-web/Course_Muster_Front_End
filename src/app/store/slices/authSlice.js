@@ -2,7 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Optional: set base URL in .env as NEXT_PUBLIC_API_URL or leave empty to use relative paths
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'https://course-muster-back-end.vercel.app';
 
 // ---------- helper to normalize server response ----------
 const normalizeAuthResponse = (data) => {

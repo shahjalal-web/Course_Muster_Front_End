@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
   const effectiveLoading = localLoading || reduxLoading;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4 text-black">
       <motion.div
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
