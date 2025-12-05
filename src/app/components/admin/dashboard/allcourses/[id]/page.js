@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const API_BASE =
   process.env.NEXT_PUBLIC_API_URL ||
-  "https://course-muster-back-end.vercel.app";
+  "http://localhost:5000/";
 
 // Utility: format date nicely
 function fmtDate(d) {
@@ -179,6 +179,7 @@ export default function ManageCoursePage() {
     return all.filter((p) => {
       // p may have batchId or batchName stored; try both
       const pBatchId = p.batchId || p.batch || null;
+      console.log(p, "hellos")
       const pBatchName = p.batchName || p.batchLabel || p.batchTitle || null;
       return matchesSelectedBatch(pBatchId, pBatchName);
     });
@@ -618,9 +619,7 @@ export default function ManageCoursePage() {
                           </td>
                           <td className="px-3 py-2 text-right">
                             <Link
-                              href={`/components/admin/dashboard/users/${
-                                p._id || p.id
-                              }`}
+                              href={`/components/admin/dashboard/users/${p.student}`}
                               className="inline-flex items-center justify-center px-3 py-1.5 rounded-full border border-sky-300 text-[11px] font-semibold bg-sky-100 hover:bg-sky-500 hover:text-white transition"
                             >
                               See Progress
