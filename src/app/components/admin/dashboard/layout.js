@@ -48,7 +48,7 @@ export default function AdminLayout({ children }) {
       console.warn(err);
     }
     // optionally dispatch redux logout here
-    router.push("/components/admin/dashboard/login");
+    router.push("/components/login");
   };
 
   return (
@@ -75,8 +75,7 @@ export default function AdminLayout({ children }) {
 
           <div className="flex items-center gap-2">
             <div className="text-sm text-gray-600 hidden sm:block">Welcome{user?.name ? `, ${user.name}` : ""}</div>
-            <button onClick={handleLogout} className="px-3 py-1 text-sm text-red-600 rounded hover:bg-red-50">Logout</button>
-          </div>
+              </div>
         </div>
       </div>
 
