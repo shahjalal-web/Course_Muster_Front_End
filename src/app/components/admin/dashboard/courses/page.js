@@ -170,10 +170,6 @@ export default function CreateCoursePage() {
       // optionally redirect to course edit or course list
       // assume backend returns created course id at data?.course?._id or data?.id
       const courseId = data?.course?._id || data?.id || null;
-      setTimeout(() => {
-        if (courseId) router.push(`/admin/courses/${courseId}`); // adjust route as you like
-        else router.push("/admin");
-      }, 800);
     } catch (err) {
       setError(err?.message || "An error occurred");
     } finally {
