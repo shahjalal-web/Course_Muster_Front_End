@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 /* pages/admin/users.jsx */
 "use client";
 import React, { useEffect, useMemo, useState } from "react";

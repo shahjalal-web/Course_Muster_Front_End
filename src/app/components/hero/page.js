@@ -4,7 +4,7 @@ import React from "react";
 
 export default function Hero() {
   return (
-    <section className="bg-gradient-to-b from-slate-50 to-white">
+    <section className="bg-linear-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
           {/* Left: copy */}
