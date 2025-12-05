@@ -255,7 +255,7 @@ export default function ManageCoursePage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-500 via-sky-500 to-emerald-400 py-8 px-4 text-black">
+    <div className="min-h-screen bg-linear-to-br from-indigo-500 via-sky-500 to-emerald-400 py-8 px-4 text-black">
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
@@ -265,7 +265,7 @@ export default function ManageCoursePage() {
         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-6">
           <div className="flex-1 space-y-3">
             <div className="inline-flex items-center gap-2">
-              <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-sm">
+              <span className="inline-flex items-center text-xs font-semibold uppercase tracking-wide px-2.5 py-1 rounded-full bg-linear-to-r from-purple-500 to-pink-500 text-white shadow-sm">
                 Manage Course
               </span>
               {course?.category && (
@@ -275,7 +275,7 @@ export default function ManageCoursePage() {
               )}
             </div>
 
-            <h1 className="text-2xl md:text-3xl font-extrabold bg-gradient-to-r from-indigo-600 via-rose-500 to-orange-400 bg-clip-text text-transparent">
+            <h1 className="text-2xl md:text-3xl font-extrabold bg-linear-to-r from-indigo-600 via-rose-500 to-orange-400 bg-clip-text text-transparent">
               {course?.title || "Course Title"}
             </h1>
 
@@ -314,7 +314,7 @@ export default function ManageCoursePage() {
           <div className="flex flex-col items-end gap-3">
             <button
               onClick={handleRefresh}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-sky-500 to-indigo-600 text-white text-sm font-semibold shadow-md hover:shadow-lg hover:brightness-110 transition"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-linear-to-r from-sky-500 to-indigo-600 text-white text-sm font-semibold shadow-md hover:shadow-lg hover:brightness-110 transition"
             >
               <span className="material-symbols-outlined text-base">
                 refresh
@@ -333,7 +333,7 @@ export default function ManageCoursePage() {
         {/* Optional loading bar */}
         {loading && (
           <div className="mt-4 h-1 w-full rounded-full bg-slate-100 overflow-hidden">
-            <div className="h-full w-1/2 bg-gradient-to-r from-indigo-500 via-sky-400 to-emerald-400 animate-[pulse_1.5s_ease-in-out_infinite]" />
+            <div className="h-full w-1/2 bg-linear-to-r from-indigo-500 via-sky-400 to-emerald-400 animate-[pulse_1.5s_ease-in-out_infinite]" />
           </div>
         )}
 
@@ -344,7 +344,7 @@ export default function ManageCoursePage() {
             <div className="rounded-2xl border border-slate-100 bg-slate-50/80 p-4 md:p-5">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-                  <span className="inline-block h-6 w-6 rounded-full bg-gradient-to-br from-indigo-500 to-sky-500 text-white flex items-center justify-center text-xs">
+                  <span className="inline-block h-6 w-6 rounded-full bg-linear-to-br from-indigo-500 to-sky-500 text-white items-center justify-center text-xs">
                     i
                   </span>
                   Course Description
@@ -356,11 +356,11 @@ export default function ManageCoursePage() {
             </div>
 
             {/* Batches */}
-            <div className="rounded-2xl border border-indigo-100 bg-gradient-to-br from-indigo-50 via-sky-50 to-emerald-50 p-4 md:p-5 space-y-4">
+            <div className="rounded-2xl border border-indigo-100 bg-linear-to-br from-indigo-50 via-sky-50 to-emerald-50 p-4 md:p-5 space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="space-y-1">
                   <h3 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-                    <span className="h-7 w-7 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 text-white flex items-center justify-center text-xs font-bold">
+                    <span className="h-7 w-7 rounded-full bg-linear-to-br from-purple-500 to-pink-500 text-white flex items-center justify-center text-xs font-bold">
                       B
                     </span>
                     Batches
@@ -387,7 +387,7 @@ export default function ManageCoursePage() {
                   <button
                     type="button"
                     onClick={openAddBatch}
-                    className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full bg-gradient-to-r from-pink-500 to-orange-400 text-white shadow-sm hover:shadow-md hover:brightness-110 transition"
+                    className="inline-flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-full bg-linear-to-r from-pink-500 to-orange-400 text-white shadow-sm hover:shadow-md hover:brightness-110 transition"
                   >
                     <span className="text-base leading-none">＋</span>
                     Add batch
@@ -404,7 +404,7 @@ export default function ManageCoursePage() {
                     >
                       <div>
                         <div className="flex items-center gap-2">
-                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold bg-gradient-to-br from-indigo-500 to-sky-500 text-white">
+                          <span className="inline-flex items-center justify-center w-6 h-6 rounded-full text-[11px] font-bold bg-linear-to-br from-indigo-500 to-sky-500 text-white">
                             {idx + 1}
                           </span>
                           <div className="font-medium text-sm text-slate-800">
@@ -482,7 +482,7 @@ export default function ManageCoursePage() {
                         type="button"
                         onClick={submitAddBatch}
                         disabled={addingBatch}
-                        className="px-4 py-2.5 text-sm font-semibold rounded-xl bg-gradient-to-r from-purple-500 to-indigo-500 text-white shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition"
+                        className="px-4 py-2.5 text-sm font-semibold rounded-xl bg-linear-to-r from-purple-500 to-indigo-500 text-white shadow-sm hover:shadow-md disabled:opacity-60 disabled:cursor-not-allowed transition"
                       >
                         {addingBatch ? "Adding..." : "Save batch"}
                       </button>
@@ -506,10 +506,10 @@ export default function ManageCoursePage() {
             </div>
 
             {/* Lessons */}
-            <div className="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-indigo-50 to-purple-50 p-4 md:p-5">
+            <div className="rounded-2xl border border-sky-100 bg-linear-to-br from-sky-50 via-indigo-50 to-purple-50 p-4 md:p-5">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-                  <span className="h-7 w-7 rounded-full bg-gradient-to-br from-sky-500 to-emerald-500 text-white flex items-center justify-center text-xs font-bold">
+                  <span className="h-7 w-7 rounded-full bg-linear-to-br from-sky-500 to-emerald-500 text-white flex items-center justify-center text-xs font-bold">
                     L
                   </span>
                   Lessons ({displayedLessonsCount})
@@ -562,10 +562,10 @@ export default function ManageCoursePage() {
 
           {/* Right 1/3: Purchases / students */}
           <div className="space-y-5">
-            <div className="rounded-2xl border border-emerald-100 bg-gradient-to-br from-emerald-50 via-sky-50 to-lime-50 p-4 md:p-5 h-full flex flex-col">
+            <div className="rounded-2xl border border-emerald-100 bg-linear-to-br from-emerald-50 via-sky-50 to-lime-50 p-4 md:p-5 h-full flex flex-col">
               <div className="flex items-center justify-between mb-3">
                 <h3 className="text-sm font-semibold text-slate-800 flex items-center gap-2">
-                  <span className="h-7 w-7 rounded-full bg-gradient-to-br from-emerald-500 to-lime-500 text-white flex items-center justify-center text-xs font-bold">
+                  <span className="h-7 w-7 rounded-full bg-linear-to-br from-emerald-500 to-lime-500 text-white flex items-center justify-center text-xs font-bold">
                     S
                   </span>
                   Purchases ({displayedPurchasesCount})
@@ -579,7 +579,7 @@ export default function ManageCoursePage() {
               ) : displayedPurchasesCount > 0 ? (
                 <div className="space-y-2 max-h-[42vh] overflow-auto rounded-2xl border border-emerald-100 bg-white/80">
                   <table className="w-full text-sm">
-                    <thead className="sticky top-0 bg-gradient-to-r from-emerald-50 to-sky-50">
+                    <thead className="sticky top-0 bg-linear-to-r from-emerald-50 to-sky-50">
                       <tr className="text-left text-[11px] text-slate-500">
                         <th className="px-3 py-2 font-semibold">Student</th>
                         <th className="px-3 py-2 font-semibold text-right">
