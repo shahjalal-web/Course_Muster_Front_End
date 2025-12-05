@@ -59,6 +59,29 @@ export default function ManageCoursePage() {
     }
   }, [courseId, course?.updatedAt, course]);
 
+  const getLessonBatchLabel = (lesson) => {
+    const id = lesson.batchId;
+    const name = lesson.batchName;
+
+    // jodi API theke already name thake, oita use kori
+    if (name) return name;
+
+    if (!id) return "";
+
+    // jodi batchOptions e match thake (same id diye)
+    const opt = batchOptions.find((o) => String(o.value) === String(id));
+    if (opt) return opt.label;
+
+    // jodi pattern eirokom hoy: 69304932ac7c93b763f96bb1-batch-1
+    const m = String(id).match(/batch[-\s_]?(\d+)/i);
+    if (m && m[1]) {
+      return `Batch ${m[1]}`;
+    }
+
+    // fallback: pura id dekhai
+    return String(id);
+  };
+
   const fetchCourse = async () => {
     setLoading(true);
     setError(null);
@@ -133,8 +156,7 @@ export default function ManageCoursePage() {
       if (
         opt &&
         opt.label &&
-        String(itemBatchName).toLowerCase() ===
-          String(opt.label).toLowerCase()
+        String(itemBatchName).toLowerCase() === String(opt.label).toLowerCase()
       )
         return true;
     }
@@ -303,9 +325,7 @@ export default function ManageCoursePage() {
                   Lessons
                 </span>
                 <span className="font-semibold">
-                  {Array.isArray(course?.lessons)
-                    ? course.lessons.length
-                    : 0}
+                  {Array.isArray(course?.lessons) ? course.lessons.length : 0}
                 </span>
               </div>
             </div>
@@ -548,8 +568,8 @@ export default function ManageCoursePage() {
                       </div>
                       <div className="text-[11px] text-slate-400 text-right">
                         {l.batchId && (
-                          <span className="inline-flex px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100">
-                            Batch: {l.batchId}
+                          <span className="md:block inline-flex px-2 py-0.5 rounded-full bg-slate-50 border border-slate-100">
+                            {`Batch: ${getLessonBatchLabel(l)}`}
                           </span>
                         )}
                       </div>

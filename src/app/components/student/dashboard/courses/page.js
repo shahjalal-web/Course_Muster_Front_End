@@ -139,7 +139,7 @@ export default function EnrollmentsViewerPage() {
   };
 
   return (
-    <div className="w-full max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 text-black overflow-x-hidden">
+    <div className="w-full max-w-6xl mx-auto py-4 px-3 sm:px-6 lg:px-8 text-black overflow-x-hidden">
       {/* Page header */}
       <div className="w-full rounded-2xl p-4 sm:p-6 mb-6 bg-linear-to-r from-green-400 via-teal-500 to-indigo-600 text-white shadow-xl overflow-hidden">
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">

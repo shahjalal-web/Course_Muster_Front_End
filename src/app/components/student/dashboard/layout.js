@@ -93,7 +93,7 @@ export default function StudentLayout({ children }) {
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.28 }}
-            className="bg-white rounded-2xl p-6 shadow-sm min-h-[70vh]"
+            className="bg-white rounded-2xl md:p-6 shadow-sm min-h-[70vh]"
           >
             {children}
           </motion.div>
