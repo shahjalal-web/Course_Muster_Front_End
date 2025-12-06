@@ -259,7 +259,7 @@ export default function AllCoursesPage() {
                   key={`${it.courseId}-${it.batchId || "nobatch"}`}
                   className="bg-white rounded-lg shadow overflow-hidden"
                 >
-                  <Link href={`/courses/${it.courseId}`} className="block">
+                  <Link href={`/components/admin/dashboard/allcourses/${it.courseId}`} className="block">
                     <div className="h-44 bg-gray-100 w-full flex items-center justify-center overflow-hidden">
                       {it.thumbnail ? (
                         <img
